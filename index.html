@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Debug - Alisha.exe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            height: 100%;
+            font-family: 'JetBrains Mono', monospace;
+            color: #00ff41;
+            background: #000000;
+            overflow: hidden;
+        }
+
+        /* LOGIN PAGE - Terminal Style */
+        #login-page,
+        #loading,
+        #main {
+            display: none;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        #login-page {
+            display: flex;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #800020 60%, #000000 100%);
+            background-size: 300% 300%;
+            animation: matrixFlow 20s ease-in-out infinite;
+        }
+
+        @keyframes matrixFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #00ff41;
+            padding: 40px;
+            border-radius: 8px;
+            width: 500px;
+            font-family: 'JetBrains Mono', monospace;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.05);
+        }
+
+        .terminal-header {
+            color: #00ff41;
+            font-size: 14px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        .terminal-box h2 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 400;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+        }
+
+        .input-line {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            color: #00ff41;
+        }
+
+        .prompt {
+            margin-right: 10px;
+            font-weight: 400;
+        }
+
+        .terminal-box input {
+            outline: none;
+            flex: 1;
+            padding: 8px;
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+        }
+
+        .terminal-box input:focus {
+            border-bottom-color: #00ff41;
+            box-shadow: 0 2px 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .terminal-box input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .execute-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 25px;
+            background: linear-gradient(135deg, #800020 0%, #1a1a2e 100%);
+            border: 1px solid #00ff41;
+            border-radius: 4px;
+            color: #00ff41;
+            font-size: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .execute-btn:hover {
+            background: linear-gradient(135deg, #a00030 0%, #2a2a3e 100%);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        }
+
+        /* LOADING PAGE - Compilation Style */
+        #loading {
+            background: linear-gradient(45deg, #000000 0%, #1a1a2e 50%, #800020 100%);
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .compiler-loader {
+            width: 300px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #800020, #1a1a2e);
+            width: 0%;
+            animation: compile 8s ease-in-out forwards;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            animation: scanning 1s linear infinite;
+        }
+
+        @keyframes compile {
+            0% { width: 0%; }
+            20% { width: 25%; }
+            40% { width: 45%; }
+            60% { width: 70%; }
+            80% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes scanning {
+            0% { transform: translateX(-20px); }
+            100% { transform: translateX(20px); }
+        }
+
+        .loading-text {
+            font-size: 18px;
+            font-weight: 300;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+        }
+
+        /* MAIN */
+        #main {
+            height: 100vh;
+            width: 100vw;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        section {
+            height: 100vh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+        }
+
+        .fallback-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #000000 0%, #1a1a2e 25%, #800020 50%, #1a1a2e 75%, #000000 100%);
+            background-size: 400% 400%;
+            animation: codeFlow 25s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes codeFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.8) 0%, 
+                rgba(26, 26, 46, 0.7) 25%,
+                rgba(128, 0, 32, 0.5) 50%,
+                rgba(26, 26, 46, 0.7) 75%,
+                rgba(0, 0, 0, 0.8) 100%);
+            z-index: 2;
+        }
+
+        /* Code-style headers */
+        .code-comment {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            z-index: 15;
+            opacity: 0.8;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            z-index: 10;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            text-shadow: 
+                0 0 30px rgba(0, 255, 65, 0.6),
+                0 0 60px rgba(128, 0, 32, 0.4),
+                0 4px 8px rgba(0, 0, 0, 1);
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+        }
+
+        .function-name {
+            font-size: 2rem;
+            color: #00ff41;
+            font-weight: 400;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        button.execute-btn {
+            margin-top: 50px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(128, 0, 32, 0.4) 100%);
+            border: 2px solid #00ff41;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 400;
+            z-index: 10;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        button.execute-btn:hover {
+            background: linear-gradient(135deg, rgba(128, 0, 32, 0.7) 0%, rgba(26, 26, 46, 0.9) 100%);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+        }
+
+        .code-block {
+            max-width: 900px;
+            font-size: 1.4rem;
+            line-height: 1.8;
+            z-index: 10;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 300;
+            text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+            letter-spacing: 1px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #00ff41;
+        }
+
+        /* Matrix-style rain effect */
+        .matrix-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff41;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            animation: matrix-fall 10s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes matrix-fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Status bar */
+        .status-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(90deg, #000000, #1a1a2e, #800020, #1a1a2e, #000000);
+            color: #00ff41;
+            padding: 15px 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            z-index: 15;
+            border-top: 1px solid #00ff41;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Birthday countdown */
+        .birthday-info {
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #00ff41;
+            padding: 15px 20px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: #00ff41;
+            z-index: 15;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8rem; }
+            .function-name { font-size: 1.5rem; }
+            .code-block { font-size: 1.1rem; padding: 20px; }
+            .terminal-box { width: 90%; padding: 30px; }
+            button.execute-btn { font-size: 16px; padding: 18px 30px; }
+            .birthday-info { top: 80px; right: 15px; font-size: 10px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- LOGIN PAGE -->
+    <div id="login-page">
+        <div class="terminal-box">
+            <div class="terminal-header">
+                alisha@birthday:~$ sudo access_surprise
+            </div>
+            <h2>// Authentication Required</h2>
+            <div class="input-line">
+                <span class="prompt">user@</span>
+                <input type="text" id="username" placeholder="enter_username">
+            </div>
+            <div class="input-line">
+                <span class="prompt">pass@</span>
+                <input type="password" id="password" placeholder="enter_password">
+            </div>
+            <button class="execute-btn" onclick="authenticate()">execute()</button>
+        </div>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading">
+        <div class="compiler-loader">
+            <div class="progress-bar"></div>
+        </div>
+        <p class="loading-text" id="loadingMessage">Compiling birthday.exe...</p>
+    </div>
+
+    <!-- MAIN PAGE -->
+    <div id="main">
+        <!-- Section 1 -->
+        <section id="section1">
+            <div class="fallback-bg"></div>
+            
+            <video autoplay loop muted playsinline>
+                <source src="1.mp4" type="video/mp4">
+            </video>
+            
+            <div class="video-overlay"></div>
+            <div class="matrix-rain" id="matrix1"></div>
+            
+            <div class="code-comment">
+                // Happy Birthday Function Initialized
+            </div>
+            
+            <div class="birthday-info" id="birthdayInfo">
+                DOB: 2006.11.26<br>
+                AGE: <span id="currentAge"></span><br>
+                STATUS: AWESOME
+            </div>
+            
+            <h1>class Birthday {</h1>
+            <div class="function-name">public celebrate(Alisha)</div>
+            
+            <button class="execute-btn" onclick="runSurprise()">execute()</button>
+            
+            <div class="status-bar">
+                <span>birthday.js | UTF-8 | JavaScript</span>
+                <span>Ln 26, Col 11 | 100% | Badar.dev</span>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="section2" style="display:none;">
+            <div class="fallback-bg"></div>
+            
+            <video autoplay loop muted playsinline>
+                <source src="2.mp4" type="video/mp4">
+            </video>
+            
+            <div class="video-overlay"></div>
+            <div class="matrix-rain" id="matrix2"></div>
+            
+            <div class="code-comment">
+                // Message from Badar.exe
+            </div>
+            
+            <h1>return {</h1>
+            <div class="code-block">
+                <div style="color: #00ff41;">// Dear Alisha,</div>
+                <div style="margin: 15px 0; color: #ffffff;">
+                    You're not just an amazing coder, you're an incredible person.<br>
+                    Your passion for programming inspires me every day.<br>
+                    Here's to another year of building dreams in code!
+                </div>
+                <div style="color: #800020;">// Love, Badar</div>
+                <div style="color: #00ff41; margin-top: 20px;">}</div>
+            </div>
+            
+            <div class="status-bar">
+                <span>message.js | UTF-8 | From Heart</span>
+                <span>Compiled successfully ✓ | Love.exe</span>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const correctUser = "Badar";
+        const correctPass = "Alisha";
+        const loadingMessages = [
+            "Compiling birthday.exe...",
+            "Loading dependencies...",
+            "Initializing celebration...",
+            "Building surprise.js...",
+            "Deploying happiness..."
+        ];
+
+        // Matrix rain characters
+        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+
+        // Calculate age from Nov 26, 2006
+        function calculateAge() {
+            const birthDate = new Date(2006, 10, 26);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            
+            return age;
+        }
+
+        // Create matrix rain effect
+        function createMatrixRain(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < 30; i++) {
+                const char = document.createElement('div');
+                char.classList.add('matrix-char');
+                char.textContent = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDelay = Math.random() * 10 + 's';
+                char.style.animationDuration = (Math.random() * 8 + 5) + 's';
+                
+                container.appendChild(char);
+            }
+        }
+
+        function authenticate() {
+            const user = document.getElementById("username").value;
+            const pass = document.getElementById("password").value;
+
+            if (user === correctUser && pass === correctPass) {
+                document.getElementById("login-page").style.display = "none";
+                document.getElementById("loading").style.display = "flex";
+
+                let i = 0;
+                const msgInterval = setInterval(() => {
+                    document.getElementById("loadingMessage").innerText = loadingMessages[i % loadingMessages.length];
+                    i++;
+                }, 1500);
+
+                setTimeout(() => {
+                    clearInterval(msgInterval);
+                    document.getElementById("loading").style.display = "none";
+                    document.getElementById("main").style.display = "block";
+                    
+                    // Calculate and display age
+                    const age = calculateAge();
+                    document.getElementById("currentAge").innerText = age;
+                    
+                    // Initialize matrix effects
+                    createMatrixRain('matrix1');
+                    createMatrixRain('matrix2');
+                }, 8000);
+            } else {
+                alert("// Error: Access Denied\n// Check your credentials and try again");
+            }
+        }
+
+        function runSurprise() {
+            const section1 = document.getElementById("section1");
+            const section2 = document.getElementById("section2");
+            
+            // Simple fade transition
+            section1.style.transition = "opacity 1s ease-in-out";
+            section1.style.opacity = "0";
+            
+            setTimeout(() => {
+                section1.style.display = "none";
+                section2.style.display = "flex";
+                section2.style.opacity = "0";
+                section2.style.transition = "opacity 1s ease-in-out";
+                
+                setTimeout(() => {
+                    section2.style.opacity = "1";
+                }, 100);
+            }, 1000);
+        }
+
+        // Initialize effects
+        window.addEventListener('load', () => {
+            createMatrixRain('matrix1');
+            createMatrixRain('matrix2');
+        });
+    </script>
+
+</body>
+
+</html>

@@ -46,8 +46,15 @@
         }
 
         @keyframes matrixFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .terminal-box {
@@ -57,7 +64,7 @@
             border-radius: 8px;
             width: 500px;
             font-family: 'JetBrains Mono', monospace;
-            box-shadow: 
+            box-shadow:
                 0 0 50px rgba(0, 255, 65, 0.3),
                 inset 0 0 20px rgba(0, 255, 65, 0.05);
         }
@@ -166,17 +173,39 @@
         }
 
         @keyframes compile {
-            0% { width: 0%; }
-            20% { width: 25%; }
-            40% { width: 45%; }
-            60% { width: 70%; }
-            80% { width: 90%; }
-            100% { width: 100%; }
+            0% {
+                width: 0%;
+            }
+
+            20% {
+                width: 25%;
+            }
+
+            40% {
+                width: 45%;
+            }
+
+            60% {
+                width: 70%;
+            }
+
+            80% {
+                width: 90%;
+            }
+
+            100% {
+                width: 100%;
+            }
         }
 
         @keyframes scanning {
-            0% { transform: translateX(-20px); }
-            100% { transform: translateX(20px); }
+            0% {
+                transform: translateX(-20px);
+            }
+
+            100% {
+                transform: translateX(20px);
+            }
         }
 
         .loading-text {
@@ -234,8 +263,15 @@
         }
 
         @keyframes codeFlow {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .video-overlay {
@@ -244,12 +280,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, 
-                rgba(0, 0, 0, 0.8) 0%, 
-                rgba(26, 26, 46, 0.7) 25%,
-                rgba(128, 0, 32, 0.5) 50%,
-                rgba(26, 26, 46, 0.7) 75%,
-                rgba(0, 0, 0, 0.8) 100%);
+            background: linear-gradient(135deg,
+                    rgba(0, 0, 0, 0.8) 0%,
+                    rgba(26, 26, 46, 0.7) 25%,
+                    rgba(128, 0, 32, 0.5) 50%,
+                    rgba(26, 26, 46, 0.7) 75%,
+                    rgba(0, 0, 0, 0.8) 100%);
             z-index: 2;
         }
 
@@ -271,7 +307,7 @@
             z-index: 10;
             color: #ffffff;
             font-family: 'JetBrains Mono', monospace;
-            text-shadow: 
+            text-shadow:
                 0 0 30px rgba(0, 255, 65, 0.6),
                 0 0 60px rgba(128, 0, 32, 0.4),
                 0 4px 8px rgba(0, 0, 0, 1);
@@ -351,12 +387,15 @@
                 transform: translateY(-100px);
                 opacity: 0;
             }
+
             10% {
                 opacity: 0.8;
             }
+
             90% {
                 opacity: 0.3;
             }
+
             100% {
                 transform: translateY(100vh);
                 opacity: 0;
@@ -397,12 +436,34 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            .function-name { font-size: 1.5rem; }
-            .code-block { font-size: 1.1rem; padding: 20px; }
-            .terminal-box { width: 90%; padding: 30px; }
-            button.execute-btn { font-size: 16px; padding: 18px 30px; }
-            .birthday-info { top: 80px; right: 15px; font-size: 10px; }
+            h1 {
+                font-size: 2.8rem;
+            }
+
+            .function-name {
+                font-size: 1.5rem;
+            }
+
+            .code-block {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+
+            .terminal-box {
+                width: 90%;
+                padding: 30px;
+            }
+
+            button.execute-btn {
+                font-size: 16px;
+                padding: 18px 30px;
+            }
+
+            .birthday-info {
+                top: 80px;
+                right: 15px;
+                font-size: 10px;
+            }
         }
     </style>
 </head>
@@ -413,9 +474,9 @@
     <div id="login-page">
         <div class="terminal-box">
             <div class="terminal-header">
-                alisha@birthday:~$ sudo access_surprise
+                alishaimran@code:~$ npm run surprise
             </div>
-            <h2>// Authentication Required</h2>
+            <h2>// // Authentication Required: Confirm You’re The Only Queen 👑</h2>
             <div class="input-line">
                 <span class="prompt">user@</span>
                 <input type="text" id="username" placeholder="enter_username">
@@ -441,50 +502,49 @@
         <!-- Section 1 -->
         <section id="section1">
             <div class="fallback-bg"></div>
-            
+
             <video autoplay loop muted playsinline>
                 <source src="1.mp4" type="video/mp4">
             </video>
-            
+
             <div class="video-overlay"></div>
             <div class="matrix-rain" id="matrix1"></div>
-            
+
             <div class="code-comment">
                 // Happy Birthday Function Initialized
             </div>
-            
+
             <div class="birthday-info" id="birthdayInfo">
                 DOB: 2006.11.26<br>
                 AGE: <span id="currentAge"></span><br>
                 STATUS: AWESOME
             </div>
-            
+
             <h1>class Birthday {</h1>
             <div class="function-name">public celebrate(Alisha)</div>
-            
+
             <button class="execute-btn" onclick="runSurprise()">execute()</button>
-            
+
             <div class="status-bar">
                 <span>birthday.js | UTF-8 | JavaScript</span>
                 <span>Ln 26, Col 11 | 100% | Badar.dev</span>
             </div>
         </section>
-
         <!-- Section 2 -->
         <section id="section2" style="display:none;">
             <div class="fallback-bg"></div>
-            
+
             <video autoplay loop muted playsinline>
                 <source src="2.mp4" type="video/mp4">
             </video>
-            
+
             <div class="video-overlay"></div>
             <div class="matrix-rain" id="matrix2"></div>
-            
+
             <div class="code-comment">
                 // Message from Badar.exe
             </div>
-            
+
             <h1>return {</h1>
             <div class="code-block">
                 <div style="color: #00ff41;">// Dear Alisha,</div>
@@ -496,17 +556,15 @@
                 <div style="color: #800020;">// Love, Badar</div>
                 <div style="color: #00ff41; margin-top: 20px;">}</div>
             </div>
-            
             <div class="status-bar">
                 <span>message.js | UTF-8 | From Heart</span>
                 <span>Compiled successfully ✓ | Love.exe</span>
             </div>
         </section>
     </div>
-
     <script>
-        const correctUser = "Badar";
-        const correctPass = "Alisha";
+        const correctUser = "TheOnlyQueen";
+        const correctPass = "StayBlessedAlisha👑";
         const loadingMessages = [
             "Compiling birthday.exe...",
             "Loading dependencies...",
@@ -524,11 +582,11 @@
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
             const monthDiff = today.getMonth() - birthDate.getMonth();
-            
+
             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
-            
+
             return age;
         }
 
@@ -536,7 +594,7 @@
         function createMatrixRain(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            
+
             for (let i = 0; i < 30; i++) {
                 const char = document.createElement('div');
                 char.classList.add('matrix-char');
@@ -544,7 +602,7 @@
                 char.style.left = Math.random() * 100 + '%';
                 char.style.animationDelay = Math.random() * 10 + 's';
                 char.style.animationDuration = (Math.random() * 8 + 5) + 's';
-                
+
                 container.appendChild(char);
             }
         }
@@ -567,34 +625,34 @@
                     clearInterval(msgInterval);
                     document.getElementById("loading").style.display = "none";
                     document.getElementById("main").style.display = "block";
-                    
+
                     // Calculate and display age
                     const age = calculateAge();
                     document.getElementById("currentAge").innerText = age;
-                    
+
                     // Initialize matrix effects
                     createMatrixRain('matrix1');
                     createMatrixRain('matrix2');
                 }, 8000);
             } else {
-                alert("// Error: Access Denied\n// Check your credentials and try again");
+                alert("// Error: Access Denied\n// You're Not the Queen! Sorry ");
             }
         }
 
         function runSurprise() {
             const section1 = document.getElementById("section1");
             const section2 = document.getElementById("section2");
-            
+
             // Simple fade transition
             section1.style.transition = "opacity 1s ease-in-out";
             section1.style.opacity = "0";
-            
+
             setTimeout(() => {
                 section1.style.display = "none";
                 section2.style.display = "flex";
                 section2.style.opacity = "0";
                 section2.style.transition = "opacity 1s ease-in-out";
-                
+
                 setTimeout(() => {
                     section2.style.opacity = "1";
                 }, 100);

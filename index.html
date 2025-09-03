@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -668,6 +669,29 @@
             createMatrixRain('matrix2');
         });
     </script>
+    <script>
+// Disable right-click context menu
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+// Optional: Show a message when someone tries to right-click
+document.addEventListener('contextmenu', function(e) {
+    alert('Right-click is disabled on this website');
+    e.preventDefault();
+}, false);
+
+// Optional: Disable developer tools shortcuts
+document.addEventListener('keydown', function(e) {
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    if (e.key === "F12" || 
+        (e.ctrlKey && e.shiftKey && e.key === "I") || 
+        (e.ctrlKey && e.shiftKey && e.key === "J") || 
+        (e.ctrlKey && e.key === "U")) {
+        e.preventDefault();
+    }
+});
+</script>
 
 </body>
 

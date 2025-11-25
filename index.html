@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Alisha</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background: #0a0a0a;
@@ -21,6 +24,7 @@
             overflow: hidden;
             position: relative;
         }
+
         .animated-bg {
             position: fixed;
             top: 0;
@@ -32,11 +36,21 @@
             animation: gradientShift 15s ease infinite;
             z-index: 1;
         }
+
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
+
         .particle {
             position: fixed;
             width: 2px;
@@ -46,16 +60,36 @@
             pointer-events: none;
             z-index: 2;
         }
+
         .particle.glow {
             box-shadow: 0 0 6px #f5e6d3, 0 0 12px #f5e6d3;
             animation: particleFloat 20s infinite ease-in-out;
         }
+
         @keyframes particleFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-            25% { transform: translate(30px, -50px) scale(1.2); opacity: 0.8; }
-            50% { transform: translate(-20px, -100px) scale(0.9); opacity: 0.5; }
-            75% { transform: translate(40px, -70px) scale(1.1); opacity: 0.7; }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.4;
+            }
+
+            25% {
+                transform: translate(30px, -50px) scale(1.2);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(-20px, -100px) scale(0.9);
+                opacity: 0.5;
+            }
+
+            75% {
+                transform: translate(40px, -70px) scale(1.1);
+                opacity: 0.7;
+            }
         }
+
         .islamic-pattern {
             position: fixed;
             font-size: 120px;
@@ -64,14 +98,39 @@
             z-index: 2;
             animation: rotatePattern 30s linear infinite;
         }
+
         @keyframes rotatePattern {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-            100% { transform: rotate(360deg) scale(1); }
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
         }
-        .islamic-pattern:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
-        .islamic-pattern:nth-child(2) { top: 70%; right: 10%; animation-delay: -10s; }
-        .islamic-pattern:nth-child(3) { bottom: 15%; left: 50%; animation-delay: -20s; }
+
+        .islamic-pattern:nth-child(1) {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .islamic-pattern:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+
+        .islamic-pattern:nth-child(3) {
+            bottom: 15%;
+            left: 50%;
+            animation-delay: -20s;
+        }
+
         .light-ray {
             position: fixed;
             width: 2px;
@@ -81,16 +140,48 @@
             z-index: 2;
             animation: rayMove 8s linear infinite;
         }
+
         @keyframes rayMove {
-            0% { transform: translateX(-100vw); opacity: 0; }
-            50% { opacity: 0.5; }
-            100% { transform: translateX(100vw); opacity: 0; }
+            0% {
+                transform: translateX(-100vw);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateX(100vw);
+                opacity: 0;
+            }
         }
-        .light-ray:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .light-ray:nth-child(2) { left: 30%; animation-delay: 2s; }
-        .light-ray:nth-child(3) { left: 50%; animation-delay: 4s; }
-        .light-ray:nth-child(4) { left: 70%; animation-delay: 6s; }
-        .light-ray:nth-child(5) { left: 90%; animation-delay: 1s; }
+
+        .light-ray:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .light-ray:nth-child(2) {
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .light-ray:nth-child(3) {
+            left: 50%;
+            animation-delay: 4s;
+        }
+
+        .light-ray:nth-child(4) {
+            left: 70%;
+            animation-delay: 6s;
+        }
+
+        .light-ray:nth-child(5) {
+            left: 90%;
+            animation-delay: 1s;
+        }
+
         .glow-orb {
             position: fixed;
             border-radius: 50%;
@@ -99,15 +190,51 @@
             z-index: 2;
             animation: orbFloat 25s infinite ease-in-out;
         }
+
         @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(100px, -80px); }
-            50% { transform: translate(-50px, -150px); }
-            75% { transform: translate(80px, -100px); }
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            25% {
+                transform: translate(100px, -80px);
+            }
+
+            50% {
+                transform: translate(-50px, -150px);
+            }
+
+            75% {
+                transform: translate(80px, -100px);
+            }
         }
-        .glow-orb:nth-child(1) { top: 20%; left: 20%; width: 200px; height: 200px; animation-delay: 0s; }
-        .glow-orb:nth-child(2) { top: 60%; right: 20%; width: 150px; height: 150px; animation-delay: -8s; }
-        .glow-orb:nth-child(3) { bottom: 20%; left: 40%; width: 180px; height: 180px; animation-delay: -16s; }
+
+        .glow-orb:nth-child(1) {
+            top: 20%;
+            left: 20%;
+            width: 200px;
+            height: 200px;
+            animation-delay: 0s;
+        }
+
+        .glow-orb:nth-child(2) {
+            top: 60%;
+            right: 20%;
+            width: 150px;
+            height: 150px;
+            animation-delay: -8s;
+        }
+
+        .glow-orb:nth-child(3) {
+            bottom: 20%;
+            left: 40%;
+            width: 180px;
+            height: 180px;
+            animation-delay: -16s;
+        }
+
         .sparkle {
             position: fixed;
             width: 4px;
@@ -118,11 +245,24 @@
             z-index: 3;
             animation: sparkleAnim 3s infinite;
         }
+
         @keyframes sparkleAnim {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px #f5e6d3; }
+
+            0%,
+            100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1);
+                box-shadow: 0 0 20px #f5e6d3;
+            }
         }
-        .login-container, .message-container {
+
+        .login-container,
+        .message-container {
             position: relative;
             z-index: 10;
             background: rgba(20, 20, 20, 0.85);
@@ -136,30 +276,50 @@
             text-align: center;
             animation: containerFadeIn 1.2s ease-out;
         }
+
         @keyframes containerFadeIn {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .message-container {
             max-width: 650px;
             display: none;
         }
-        .login-container::before, .message-container::before {
+
+        .login-container::before,
+        .message-container::before {
             content: '';
             position: absolute;
             top: -2px;
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, rgba(245, 230, 211, 0.3), rgba(245, 230, 211, 0.1), rgba(245, 230, 211, 0.3));
+            /* background: linear-gradient(45deg, rgba(245, 230, 211, 0.3), rgba(245, 230, 211, 0.1), rgba(245, 230, 211, 0.3)); */
             border-radius: 25px;
             z-index: -1;
             animation: borderGlow 3s ease-in-out infinite;
         }
+
         @keyframes borderGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
+
         .login-container h1 {
             font-family: 'Playfair Display', serif;
             color: #f5e6d3;
@@ -170,20 +330,31 @@
             letter-spacing: 2px;
             animation: titleGlow 2s ease-in-out infinite;
         }
+
         @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 30px rgba(245, 230, 211, 0.4), 0 4px 6px rgba(0, 0, 0, 0.5); }
-            50% { text-shadow: 0 0 40px rgba(245, 230, 211, 0.6), 0 4px 6px rgba(0, 0, 0, 0.5); }
+
+            0%,
+            100% {
+                text-shadow: 0 0 30px rgba(245, 230, 211, 0.4), 0 4px 6px rgba(0, 0, 0, 0.5);
+            }
+
+            50% {
+                text-shadow: 0 0 40px rgba(245, 230, 211, 0.6), 0 4px 6px rgba(0, 0, 0, 0.5);
+            }
         }
+
         .login-container p {
             color: rgba(245, 230, 211, 0.7);
             margin-bottom: 35px;
             font-size: 0.95rem;
             letter-spacing: 0.5px;
         }
+
         .input-group {
             margin-bottom: 25px;
             text-align: left;
         }
+
         .input-group label {
             display: block;
             color: #f5e6d3;
@@ -192,6 +363,7 @@
             letter-spacing: 1px;
             font-weight: 500;
         }
+
         .input-group input {
             width: 100%;
             padding: 15px 20px;
@@ -203,15 +375,18 @@
             font-family: 'Poppins', sans-serif;
             transition: all 0.3s ease;
         }
+
         .input-group input:focus {
             outline: none;
             border-color: rgba(245, 230, 211, 0.6);
             background: rgba(30, 30, 30, 0.8);
             box-shadow: 0 0 20px rgba(245, 230, 211, 0.15), inset 0 0 10px rgba(245, 230, 211, 0.05);
         }
+
         .input-group input::placeholder {
             color: rgba(245, 230, 211, 0.4);
         }
+
         .btn {
             width: 100%;
             padding: 16px;
@@ -228,6 +403,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .btn::before {
             content: '';
             position: absolute;
@@ -240,19 +416,23 @@
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
+
         .btn:hover::before {
             width: 300px;
             height: 300px;
         }
+
         .btn:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(245, 230, 211, 0.25), 0 0 30px rgba(245, 230, 211, 0.2);
             border-color: rgba(245, 230, 211, 0.5);
         }
+
         .btn span {
             position: relative;
             z-index: 1;
         }
+
         .message-container h2 {
             font-family: 'Playfair Display', serif;
             color: #f5e6d3;
@@ -263,10 +443,19 @@
             letter-spacing: 2px;
             animation: titlePulse 3s ease-in-out infinite;
         }
+
         @keyframes titlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
         }
+
         .islamic-greeting {
             font-family: 'Amiri', serif;
             color: #f5e6d3;
@@ -277,10 +466,19 @@
             letter-spacing: 1px;
             animation: arabicGlow 2.5s ease-in-out infinite;
         }
+
         @keyframes arabicGlow {
-            0%, 100% { opacity: 0.9; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0.9;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
+
         .age-badge {
             display: inline-block;
             background: linear-gradient(135deg, rgba(245, 230, 211, 0.2), rgba(245, 230, 211, 0.15));
@@ -294,6 +492,7 @@
             letter-spacing: 0.5px;
             box-shadow: 0 4px 15px rgba(245, 230, 211, 0.1);
         }
+
         .message-text {
             color: rgba(245, 230, 211, 0.9);
             line-height: 1.9;
@@ -302,9 +501,11 @@
             margin-bottom: 30px;
             letter-spacing: 0.3px;
         }
+
         .message-text p {
             margin-bottom: 18px;
         }
+
         .dua-box {
             background: linear-gradient(135deg, rgba(245, 230, 211, 0.08), rgba(245, 230, 211, 0.05));
             padding: 25px;
@@ -314,6 +515,7 @@
             text-align: center;
             box-shadow: inset 0 0 20px rgba(245, 230, 211, 0.03);
         }
+
         .dua-box .arabic-dua {
             font-family: 'Amiri', serif;
             color: #f5e6d3;
@@ -323,12 +525,14 @@
             font-weight: 600;
             text-shadow: 0 0 15px rgba(245, 230, 211, 0.3);
         }
+
         .dua-box .dua-translation {
             color: rgba(245, 230, 211, 0.75);
             font-size: 0.9rem;
             font-style: italic;
             line-height: 1.6;
         }
+
         .special-note {
             background: linear-gradient(135deg, rgba(245, 230, 211, 0.1), rgba(245, 230, 211, 0.05));
             padding: 20px;
@@ -337,12 +541,14 @@
             text-align: center;
             border: 1px solid rgba(245, 230, 211, 0.15);
         }
+
         .special-note p {
             color: rgba(245, 230, 211, 0.85);
             font-size: 1.05rem;
             line-height: 1.7;
             margin: 0;
         }
+
         .signature {
             text-align: right;
             color: rgba(245, 230, 211, 0.8);
@@ -352,46 +558,59 @@
             letter-spacing: 0.5px;
             font-weight: 500;
         }
+
         .decorative-line {
             width: 60%;
             height: 1px;
             background: linear-gradient(to right, transparent, rgba(245, 230, 211, 0.3), transparent);
             margin: 25px auto;
         }
+
         @media (max-width: 768px) {
-            .login-container, .message-container {
+
+            .login-container,
+            .message-container {
                 padding: 40px 30px;
                 max-width: 95%;
             }
+
             .login-container h1 {
                 font-size: 2.2rem;
             }
+
             .message-container h2 {
                 font-size: 2.3rem;
             }
+
             .islamic-greeting {
                 font-size: 1.3rem;
             }
+
             .message-text {
                 font-size: 1rem;
             }
+
             .dua-box .arabic-dua {
                 font-size: 1.2rem;
             }
         }
+
         @media (max-width: 480px) {
             .login-container h1 {
                 font-size: 1.9rem;
             }
+
             .message-container h2 {
                 font-size: 2rem;
             }
+
             .message-text {
                 font-size: 0.95rem;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="animated-bg"></div>
     <div class="islamic-pattern">✦</div>
@@ -409,12 +628,12 @@
         <h1>Birthday Message</h1>
         <p>Enter your credentials to unlock</p>
         <div class="input-group">
-            <label>Username</label>
-            <input type="text" id="username" placeholder="Enter username">
+            <label>aap ka name?</label>
+            <input type="text" id="username" placeholder="Enter apna username">
         </div>
         <div class="input-group">
             <label>Password</label>
-            <input type="password" id="password" placeholder="Enter password">
+            <input type="password" id="password" placeholder="Enter aap ka password">
         </div>
         <button class="btn" onclick="authenticate()"><span>Unlock Message</span></button>
     </div>
@@ -428,21 +647,23 @@
         </div>
         <div class="decorative-line"></div>
         <div class="message-text">
-            <p>Happy birthday Alisha! May Allah pak give you success in every way of life and har cheez aap k mangny se pehly hi Allah pak aap k hissy me rakh den, Ameeeen!</p>
+            <p>Happy birthday Alisha! May Allah pak give you success in every way of life and har cheez aap k mangny se
+                pehly hi Allah pak aap k hissy me rakh den, Ameeeen!</p>
         </div>
         <div class="dua-box">
             <div class="arabic-dua">
                 اللَّهُمَّ بَارِكْ لَهَا وَبَارِكْ عَلَيْهَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ
             </div>
             <div class="dua-translation">
-                "O Allah, bless her and shower Your blessings upon her, and grant her safety, success and the best future."
+                "O Allah, bless her and shower Your blessings upon her, and grant her safety, success and the best
+                future."
             </div>
         </div>
         <div class="message-text">
             <p>May Allah bless you and aap jaldi se Alima ban jayen!</p>
         </div>
         <div class="special-note">
-            <p>He will be so lucky jo aap k future me aye ga, Kash! 🌙</p>
+            <p>He will be so lucky jo aap k future me aye ga, Kash me! 🌙</p>
         </div>
         <div class="decorative-line"></div>
         <div class="signature">
@@ -451,7 +672,7 @@
     </div>
     <script>
         const correctUser = "Alisha";
-        const correctPass = "FutureAlima";
+        const correctPass = "Janaan";
         function createParticles() {
             const particleCount = 80;
             for (let i = 0; i < particleCount; i++) {
@@ -503,15 +724,16 @@
                 alert('❌ Access Denied! Incorrect credentials.');
             }
         }
-        document.addEventListener('keypress', function(e) {
+        document.addEventListener('keypress', function (e) {
             if (e.key === 'Enter' && document.getElementById('loginContainer').style.display !== 'none') {
                 authenticate();
             }
         });
-        window.addEventListener('load', function() {
+        window.addEventListener('load', function () {
             createParticles();
             createSparkles();
         });
     </script>
 </body>
+
 </html>

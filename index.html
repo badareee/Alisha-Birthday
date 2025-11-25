@@ -1,698 +1,517 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Debug - Alisha.exe</title>
+    <title>Happy Birthday Alisha</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;400;700&display=swap');
-
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap');
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        body,
-        html {
-            height: 100%;
-            font-family: 'JetBrains Mono', monospace;
-            color: #00ff41;
-            background: #000000;
-            overflow: hidden;
-        }
-
-        /* LOGIN PAGE - Terminal Style */
-        #login-page,
-        #loading,
-        #main {
-            display: none;
-            height: 100vh;
-            width: 100vw;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        #login-page {
-            display: flex;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 30%, #800020 60%, #000000 100%);
-            background-size: 300% 300%;
-            animation: matrixFlow 20s ease-in-out infinite;
-        }
-
-        @keyframes matrixFlow {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .terminal-box {
-            background: rgba(0, 0, 0, 0.95);
-            border: 2px solid #00ff41;
-            padding: 40px;
-            border-radius: 8px;
-            width: 500px;
-            font-family: 'JetBrains Mono', monospace;
-            box-shadow:
-                0 0 50px rgba(0, 255, 65, 0.3),
-                inset 0 0 20px rgba(0, 255, 65, 0.05);
-        }
-
-        .terminal-header {
-            color: #00ff41;
-            font-size: 14px;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-
-        .terminal-box h2 {
-            margin-bottom: 30px;
-            font-size: 24px;
-            font-weight: 400;
-            color: #ffffff;
-            text-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
-        }
-
-        .input-line {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            color: #00ff41;
-        }
-
-        .prompt {
-            margin-right: 10px;
-            font-weight: 400;
-        }
-
-        .terminal-box input {
-            outline: none;
-            flex: 1;
-            padding: 8px;
-            border: none;
-            background: transparent;
-            font-size: 16px;
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            border-bottom: 1px solid rgba(0, 255, 65, 0.3);
-        }
-
-        .terminal-box input:focus {
-            border-bottom-color: #00ff41;
-            box-shadow: 0 2px 10px rgba(0, 255, 65, 0.2);
-        }
-
-        .terminal-box input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .execute-btn {
-            width: 100%;
-            padding: 15px;
-            margin-top: 25px;
-            background: linear-gradient(135deg, #800020 0%, #1a1a2e 100%);
-            border: 1px solid #00ff41;
-            border-radius: 4px;
-            color: #00ff41;
-            font-size: 16px;
-            font-family: 'JetBrains Mono', monospace;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .execute-btn:hover {
-            background: linear-gradient(135deg, #a00030 0%, #2a2a3e 100%);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
-        }
-
-        /* LOADING PAGE - Compilation Style */
-        #loading {
-            background: linear-gradient(45deg, #000000 0%, #1a1a2e 50%, #800020 100%);
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        .compiler-loader {
-            width: 300px;
-            height: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00ff41;
-            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #00ff41, #800020, #1a1a2e);
-            width: 0%;
-            animation: compile 8s ease-in-out forwards;
-            position: relative;
-        }
-
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 20px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
-            animation: scanning 1s linear infinite;
-        }
-
-        @keyframes compile {
-            0% {
-                width: 0%;
-            }
-
-            20% {
-                width: 25%;
-            }
-
-            40% {
-                width: 45%;
-            }
-
-            60% {
-                width: 70%;
-            }
-
-            80% {
-                width: 90%;
-            }
-
-            100% {
-                width: 100%;
-            }
-        }
-
-        @keyframes scanning {
-            0% {
-                transform: translateX(-20px);
-            }
-
-            100% {
-                transform: translateX(20px);
-            }
-        }
-
-        .loading-text {
-            font-size: 18px;
-            font-weight: 300;
-            color: #00ff41;
-            font-family: 'JetBrains Mono', monospace;
-            text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
-        }
-
-        /* MAIN */
-        #main {
-            height: 100vh;
-            width: 100vw;
+        .animated-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            overflow: hidden;
-        }
-
-        section {
-            height: 100vh;
-            width: 100vw;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 40px;
-        }
-
-        video {
-            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a, #0a0a0a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
             z-index: 1;
         }
-
-        .fallback-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #000000 0%, #1a1a2e 25%, #800020 50%, #1a1a2e 75%, #000000 100%);
-            background-size: 400% 400%;
-            animation: codeFlow 25s ease-in-out infinite;
-            z-index: 0;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
-
-        @keyframes codeFlow {
-
-            0%,
-            100% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-
-        .video-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg,
-                    rgba(0, 0, 0, 0.8) 0%,
-                    rgba(26, 26, 46, 0.7) 25%,
-                    rgba(128, 0, 32, 0.5) 50%,
-                    rgba(26, 26, 46, 0.7) 75%,
-                    rgba(0, 0, 0, 0.8) 100%);
+        .particle {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: #f5e6d3;
+            border-radius: 50%;
+            pointer-events: none;
             z-index: 2;
         }
-
-        /* Code-style headers */
-        .code-comment {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #00ff41;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            z-index: 15;
-            opacity: 0.8;
+        .particle.glow {
+            box-shadow: 0 0 6px #f5e6d3, 0 0 12px #f5e6d3;
+            animation: particleFloat 20s infinite ease-in-out;
         }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 300;
-            z-index: 10;
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            text-shadow:
-                0 0 30px rgba(0, 255, 65, 0.6),
-                0 0 60px rgba(128, 0, 32, 0.4),
-                0 4px 8px rgba(0, 0, 0, 1);
-            letter-spacing: 4px;
-            margin-bottom: 20px;
+        @keyframes particleFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            25% { transform: translate(30px, -50px) scale(1.2); opacity: 0.8; }
+            50% { transform: translate(-20px, -100px) scale(0.9); opacity: 0.5; }
+            75% { transform: translate(40px, -70px) scale(1.1); opacity: 0.7; }
         }
-
-        .function-name {
-            font-size: 2rem;
-            color: #00ff41;
-            font-weight: 400;
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-        }
-
-        button.execute-btn {
-            margin-top: 50px;
-            padding: 20px 40px;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(128, 0, 32, 0.4) 100%);
-            border: 2px solid #00ff41;
-            border-radius: 6px;
-            font-size: 18px;
-            cursor: pointer;
-            color: #00ff41;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 400;
-            z-index: 10;
-            transition: all 0.3s ease;
-            letter-spacing: 2px;
-            position: relative;
-        }
-
-        button.execute-btn:hover {
-            background: linear-gradient(135deg, rgba(128, 0, 32, 0.7) 0%, rgba(26, 26, 46, 0.9) 100%);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
-        }
-
-        .code-block {
-            max-width: 900px;
-            font-size: 1.4rem;
-            line-height: 1.8;
-            z-index: 10;
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 300;
-            text-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
-            letter-spacing: 1px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 4px solid #00ff41;
-        }
-
-        /* Matrix-style rain effect */
-        .matrix-rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
+        .islamic-pattern {
+            position: fixed;
+            font-size: 120px;
+            color: rgba(245, 230, 211, 0.03);
             pointer-events: none;
+            z-index: 2;
+            animation: rotatePattern 30s linear infinite;
         }
-
-        .matrix-char {
+        @keyframes rotatePattern {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .islamic-pattern:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .islamic-pattern:nth-child(2) { top: 70%; right: 10%; animation-delay: -10s; }
+        .islamic-pattern:nth-child(3) { bottom: 15%; left: 50%; animation-delay: -20s; }
+        .light-ray {
+            position: fixed;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(245, 230, 211, 0.1), transparent);
+            pointer-events: none;
+            z-index: 2;
+            animation: rayMove 8s linear infinite;
+        }
+        @keyframes rayMove {
+            0% { transform: translateX(-100vw); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+        .light-ray:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .light-ray:nth-child(2) { left: 30%; animation-delay: 2s; }
+        .light-ray:nth-child(3) { left: 50%; animation-delay: 4s; }
+        .light-ray:nth-child(4) { left: 70%; animation-delay: 6s; }
+        .light-ray:nth-child(5) { left: 90%; animation-delay: 1s; }
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(245, 230, 211, 0.2), transparent);
+            pointer-events: none;
+            z-index: 2;
+            animation: orbFloat 25s infinite ease-in-out;
+        }
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(100px, -80px); }
+            50% { transform: translate(-50px, -150px); }
+            75% { transform: translate(80px, -100px); }
+        }
+        .glow-orb:nth-child(1) { top: 20%; left: 20%; width: 200px; height: 200px; animation-delay: 0s; }
+        .glow-orb:nth-child(2) { top: 60%; right: 20%; width: 150px; height: 150px; animation-delay: -8s; }
+        .glow-orb:nth-child(3) { bottom: 20%; left: 40%; width: 180px; height: 180px; animation-delay: -16s; }
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #f5e6d3;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            animation: sparkleAnim 3s infinite;
+        }
+        @keyframes sparkleAnim {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); box-shadow: 0 0 20px #f5e6d3; }
+        }
+        .login-container, .message-container {
+            position: relative;
+            z-index: 10;
+            background: rgba(20, 20, 20, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(245, 230, 211, 0.2);
+            border-radius: 25px;
+            padding: 60px 50px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 0 40px rgba(245, 230, 211, 0.1), inset 0 0 60px rgba(245, 230, 211, 0.02);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: containerFadeIn 1.2s ease-out;
+        }
+        @keyframes containerFadeIn {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .message-container {
+            max-width: 650px;
+            display: none;
+        }
+        .login-container::before, .message-container::before {
+            content: '';
             position: absolute;
-            color: #00ff41;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            animation: matrix-fall 10s linear infinite;
-            opacity: 0.6;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, rgba(245, 230, 211, 0.3), rgba(245, 230, 211, 0.1), rgba(245, 230, 211, 0.3));
+            border-radius: 25px;
+            z-index: -1;
+            animation: borderGlow 3s ease-in-out infinite;
         }
-
-        @keyframes matrix-fall {
-            0% {
-                transform: translateY(-100px);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 0.8;
-            }
-
-            90% {
-                opacity: 0.3;
-            }
-
-            100% {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
-
-        /* Status bar */
-        .status-bar {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+        .login-container h1 {
+            font-family: 'Playfair Display', serif;
+            color: #f5e6d3;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(245, 230, 211, 0.4), 0 4px 6px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            animation: titleGlow 2s ease-in-out infinite;
+        }
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 0 0 30px rgba(245, 230, 211, 0.4), 0 4px 6px rgba(0, 0, 0, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(245, 230, 211, 0.6), 0 4px 6px rgba(0, 0, 0, 0.5); }
+        }
+        .login-container p {
+            color: rgba(245, 230, 211, 0.7);
+            margin-bottom: 35px;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            color: #f5e6d3;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .input-group input {
             width: 100%;
-            background: linear-gradient(90deg, #000000, #1a1a2e, #800020, #1a1a2e, #000000);
-            color: #00ff41;
-            padding: 15px 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            z-index: 15;
-            border-top: 1px solid #00ff41;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Birthday countdown */
-        .birthday-info {
-            position: absolute;
-            top: 60px;
-            right: 30px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid #00ff41;
             padding: 15px 20px;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            color: #00ff41;
-            z-index: 15;
+            border: 1px solid rgba(245, 230, 211, 0.2);
+            border-radius: 12px;
+            font-size: 1rem;
+            background: rgba(30, 30, 30, 0.6);
+            color: #f5e6d3;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
         }
-
-        /* Responsive */
+        .input-group input:focus {
+            outline: none;
+            border-color: rgba(245, 230, 211, 0.6);
+            background: rgba(30, 30, 30, 0.8);
+            box-shadow: 0 0 20px rgba(245, 230, 211, 0.15), inset 0 0 10px rgba(245, 230, 211, 0.05);
+        }
+        .input-group input::placeholder {
+            color: rgba(245, 230, 211, 0.4);
+        }
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(245, 230, 211, 0.15), rgba(245, 230, 211, 0.25));
+            border: 1px solid rgba(245, 230, 211, 0.3);
+            border-radius: 12px;
+            color: #f5e6d3;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(245, 230, 211, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(245, 230, 211, 0.25), 0 0 30px rgba(245, 230, 211, 0.2);
+            border-color: rgba(245, 230, 211, 0.5);
+        }
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+        .message-container h2 {
+            font-family: 'Playfair Display', serif;
+            color: #f5e6d3;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 0 0 30px rgba(245, 230, 211, 0.5), 0 4px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2px;
+            animation: titlePulse 3s ease-in-out infinite;
+        }
+        @keyframes titlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        .islamic-greeting {
+            font-family: 'Amiri', serif;
+            color: #f5e6d3;
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(245, 230, 211, 0.4);
+            letter-spacing: 1px;
+            animation: arabicGlow 2.5s ease-in-out infinite;
+        }
+        @keyframes arabicGlow {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+        .age-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(245, 230, 211, 0.2), rgba(245, 230, 211, 0.15));
+            border: 1px solid rgba(245, 230, 211, 0.3);
+            color: #f5e6d3;
+            padding: 10px 25px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(245, 230, 211, 0.1);
+        }
+        .message-text {
+            color: rgba(245, 230, 211, 0.9);
+            line-height: 1.9;
+            font-size: 1.08rem;
+            text-align: left;
+            margin-bottom: 30px;
+            letter-spacing: 0.3px;
+        }
+        .message-text p {
+            margin-bottom: 18px;
+        }
+        .dua-box {
+            background: linear-gradient(135deg, rgba(245, 230, 211, 0.08), rgba(245, 230, 211, 0.05));
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid rgba(245, 230, 211, 0.4);
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: inset 0 0 20px rgba(245, 230, 211, 0.03);
+        }
+        .dua-box .arabic-dua {
+            font-family: 'Amiri', serif;
+            color: #f5e6d3;
+            font-size: 1.4rem;
+            line-height: 2;
+            margin-bottom: 15px;
+            font-weight: 600;
+            text-shadow: 0 0 15px rgba(245, 230, 211, 0.3);
+        }
+        .dua-box .dua-translation {
+            color: rgba(245, 230, 211, 0.75);
+            font-size: 0.9rem;
+            font-style: italic;
+            line-height: 1.6;
+        }
+        .special-note {
+            background: linear-gradient(135deg, rgba(245, 230, 211, 0.1), rgba(245, 230, 211, 0.05));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid rgba(245, 230, 211, 0.15);
+        }
+        .special-note p {
+            color: rgba(245, 230, 211, 0.85);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin: 0;
+        }
+        .signature {
+            text-align: right;
+            color: rgba(245, 230, 211, 0.8);
+            font-style: italic;
+            margin-top: 35px;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        .decorative-line {
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(245, 230, 211, 0.3), transparent);
+            margin: 25px auto;
+        }
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.8rem;
+            .login-container, .message-container {
+                padding: 40px 30px;
+                max-width: 95%;
             }
-
-            .function-name {
-                font-size: 1.5rem;
+            .login-container h1 {
+                font-size: 2.2rem;
             }
-
-            .code-block {
-                font-size: 1.1rem;
-                padding: 20px;
+            .message-container h2 {
+                font-size: 2.3rem;
             }
-
-            .terminal-box {
-                width: 90%;
-                padding: 30px;
+            .islamic-greeting {
+                font-size: 1.3rem;
             }
-
-            button.execute-btn {
-                font-size: 16px;
-                padding: 18px 30px;
+            .message-text {
+                font-size: 1rem;
             }
-
-            .birthday-info {
-                top: 80px;
-                right: 15px;
-                font-size: 10px;
+            .dua-box .arabic-dua {
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .login-container h1 {
+                font-size: 1.9rem;
+            }
+            .message-container h2 {
+                font-size: 2rem;
+            }
+            .message-text {
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
-
 <body>
-
-    <!-- LOGIN PAGE -->
-    <div id="login-page">
-        <div class="terminal-box">
-            <div class="terminal-header">
-                alishaimran@code:~$ npm run Alima's Surprise
-            </div>
-            <h2>// Authentication Required: Confirm Ap Alisha👑 ho? 😑</h2>
-            <div class="input-line">
-                <span class="prompt">user@</span>
-                <input type="text" id="username" placeholder="enter_username">
-            </div>
-            <div class="input-line">
-                <span class="prompt">pass@</span>
-                <input type="password" id="password" placeholder="enter_password">
-            </div>
-            <button class="execute-btn" onclick="authenticate()">execute()</button>
+    <div class="animated-bg"></div>
+    <div class="islamic-pattern">✦</div>
+    <div class="islamic-pattern">✧</div>
+    <div class="islamic-pattern">❋</div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="light-ray"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb"></div>
+    <div class="glow-orb"></div>
+    <div class="login-container" id="loginContainer">
+        <h1>Birthday Message</h1>
+        <p>Enter your credentials to unlock</p>
+        <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="username" placeholder="Enter username">
         </div>
-    </div>
-
-    <!-- LOADING -->
-    <div id="loading">
-        <div class="compiler-loader">
-            <div class="progress-bar"></div>
+        <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="Enter password">
         </div>
-        <p class="loading-text" id="loadingMessage">Compiling birthday.exe...</p>
+        <button class="btn" onclick="authenticate()"><span>Unlock Message</span></button>
     </div>
-
-    <!-- MAIN PAGE -->
-    <div id="main">
-        <!-- Section 1 -->
-        <section id="section1">
-            <div class="fallback-bg"></div>
-
-            <video autoplay loop muted playsinline>
-                <source src="1.mp4" type="video/mp4">
-            </video>
-
-            <div class="video-overlay"></div>
-            <div class="matrix-rain" id="matrix1"></div>
-
-            <div class="code-comment">
-                // Happy Birthday Function Initialized
+    <div class="message-container" id="messageContainer">
+        <h2>Happy Birthday Alisha! 🎉</h2>
+        <div class="islamic-greeting">
+            السلام عليكم ورحمة الله وبركاته
+        </div>
+        <div style="text-align: center;">
+            <span class="age-badge">🎂 Age: <span id="age"></span> • November 26, 2006</span>
+        </div>
+        <div class="decorative-line"></div>
+        <div class="message-text">
+            <p>Happy birthday Alisha! May Allah pak give you success in every way of life and har cheez aap k mangny se pehly hi Allah pak aap k hissy me rakh den, Ameeeen!</p>
+        </div>
+        <div class="dua-box">
+            <div class="arabic-dua">
+                اللَّهُمَّ بَارِكْ لَهَا وَبَارِكْ عَلَيْهَا وَاجْمَعْ بَيْنَهُمَا فِي خَيْرٍ
             </div>
-
-            <div class="birthday-info" id="birthdayInfo">
-                DOB: 2006.11.26<br>
-                AGE: <span id="currentAge"></span><br>
-                STATUS: AWESOME
+            <div class="dua-translation">
+                "O Allah, bless her and shower Your blessings upon her, and grant her safety, success and the best future."
             </div>
-
-            <h1>class Birthday {</h1>
-            <div class="function-name">public celebrate(Alisha)</div>
-
-            <button class="execute-btn" onclick="runSurprise()">execute()</button>
-
-            <div class="status-bar">
-                <span>birthday.js | UTF-8 | JavaScript</span>
-                <span>Ln 26, Col 11 | 100% | Badar.dev</span>
-            </div>
-        </section>
-        <!-- Section 2 -->
-        <section id="section2" style="display:none;">
-            <div class="fallback-bg"></div>
-
-            <video autoplay loop muted playsinline>
-                <source src="2.mp4" type="video/mp4">
-            </video>
-
-            <div class="video-overlay"></div>
-            <div class="matrix-rain" id="matrix2"></div>
-
-            <div class="code-comment">
-                // Message from Badar.exe
-            </div>
-
-            <h1>return {</h1>
-            <div class="code-block">
-                <div style="color: #00ff41;">// Message To Her ,</div>
-                <div style="margin: 15px 0; color: #ffffff;">
-                    Happy Birthday Alisha! This Message isn't Enough But Kia karu! I can't even express my
-                    thoughts openly<br>
-                    You're honestly one of my big inspiration, I'm really inspired and impressed of you.<br>
-                    May This year bring you all the halal and good things that you wish for and only if they are good
-                    for your dunya and akhira!<br>
-                    Stay safe, you mean more than you know ❤️
-                </div>
-                <div style="color: #800020;">// Random, Badar</div>
-                <div style="color: #00ff41; margin-top: 20px;">}</div>
-            </div>
-            <div class="status-bar">
-                <span>message.js | UTF-8 | From Heart</span>
-                <span>Compiled successfully ✓ | Badar.exe</span>
-            </div>
-        </section>
+        </div>
+        <div class="message-text">
+            <p>May Allah bless you and aap jaldi se Alima ban jayen!</p>
+        </div>
+        <div class="special-note">
+            <p>He will be so lucky jo aap k future me aye ga, Kash! 🌙</p>
+        </div>
+        <div class="decorative-line"></div>
+        <div class="signature">
+            — With sincere wishes, Badar
+        </div>
     </div>
     <script>
-        const correctUser = "Alisha👑";
+        const correctUser = "Alisha";
         const correctPass = "FutureAlima";
-        const loadingMessages = [
-            "Compiling birthday.exe...",
-            "Loading dependencies...",
-            "Initializing celebration...",
-            "Building surprise.js...",
-            "Deploying happiness..."
-        ];
-
-        // Matrix rain characters
-        const matrixChars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
-
-        // Calculate age from Nov 26, 2006
+        function createParticles() {
+            const particleCount = 80;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                if (Math.random() > 0.5) {
+                    particle.classList.add('glow');
+                }
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+        function createSparkles() {
+            const sparkleCount = 30;
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 3 + 's';
+                sparkle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                document.body.appendChild(sparkle);
+            }
+        }
         function calculateAge() {
             const birthDate = new Date(2006, 10, 26);
             const today = new Date();
             let age = today.getFullYear() - birthDate.getFullYear();
             const monthDiff = today.getMonth() - birthDate.getMonth();
-
             if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }
-
             return age;
         }
-
-        // Create matrix rain effect
-        function createMatrixRain(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-
-            for (let i = 0; i < 30; i++) {
-                const char = document.createElement('div');
-                char.classList.add('matrix-char');
-                char.textContent = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                char.style.left = Math.random() * 100 + '%';
-                char.style.animationDelay = Math.random() * 10 + 's';
-                char.style.animationDuration = (Math.random() * 8 + 5) + 's';
-
-                container.appendChild(char);
-            }
-        }
-
         function authenticate() {
-            const user = document.getElementById("username").value;
-            const pass = document.getElementById("password").value;
-
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
             if (user === correctUser && pass === correctPass) {
-                document.getElementById("login-page").style.display = "none";
-                document.getElementById("loading").style.display = "flex";
-
-                let i = 0;
-                const msgInterval = setInterval(() => {
-                    document.getElementById("loadingMessage").innerText = loadingMessages[i % loadingMessages.length];
-                    i++;
-                }, 1500);
-
+                document.getElementById('loginContainer').style.animation = 'containerFadeIn 0.8s ease-out reverse';
                 setTimeout(() => {
-                    clearInterval(msgInterval);
-                    document.getElementById("loading").style.display = "none";
-                    document.getElementById("main").style.display = "block";
-
-                    // Calculate and display age
-                    const age = calculateAge();
-                    document.getElementById("currentAge").innerText = age;
-
-                    // Initialize matrix effects
-                    createMatrixRain('matrix1');
-                    createMatrixRain('matrix2');
-                }, 8000);
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('messageContainer').style.display = 'block';
+                    document.getElementById('age').textContent = calculateAge();
+                }, 800);
             } else {
-                alert("// Error: Access Denied\n// You're Not the Queen! Sorry ");
+                alert('❌ Access Denied! Incorrect credentials.');
             }
         }
-
-        function runSurprise() {
-            const section1 = document.getElementById("section1");
-            const section2 = document.getElementById("section2");
-
-            // Simple fade transition
-            section1.style.transition = "opacity 1s ease-in-out";
-            section1.style.opacity = "0";
-
-            setTimeout(() => {
-                section1.style.display = "none";
-                section2.style.display = "flex";
-                section2.style.opacity = "0";
-                section2.style.transition = "opacity 1s ease-in-out";
-
-                setTimeout(() => {
-                    section2.style.opacity = "1";
-                }, 100);
-            }, 1000);
-        }
-
-        // Initialize effects
-        window.addEventListener('load', () => {
-            createMatrixRain('matrix1');
-            createMatrixRain('matrix2');
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && document.getElementById('loginContainer').style.display !== 'none') {
+                authenticate();
+            }
+        });
+        window.addEventListener('load', function() {
+            createParticles();
+            createSparkles();
         });
     </script>
-    <script>
-// Disable right-click context menu
-document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});
-
-// Optional: Show a message when someone tries to right-click
-document.addEventListener('contextmenu', function(e) {
-    alert('Right-click is disabled on this website');
-    e.preventDefault();
-}, false);
-
-// Optional: Disable developer tools shortcuts
-document.addEventListener('keydown', function(e) {
-    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
-    if (e.key === "F12" || 
-        (e.ctrlKey && e.shiftKey && e.key === "I") || 
-        (e.ctrlKey && e.shiftKey && e.key === "J") || 
-        (e.ctrlKey && e.key === "U")) {
-        e.preventDefault();
-    }
-});
-</script>
-
 </body>
-
 </html>
